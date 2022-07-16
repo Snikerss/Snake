@@ -3,7 +3,7 @@
 #include "Snake.h"
 #include "Fruit.h"
 
-//#include "GlobalVariables.cpp"
+using namespace std;
 
 const int DELAY = 250; // Delay between ticks in milliseconds
 
@@ -16,16 +16,25 @@ const int HEIGHT = SCALE * Y; // Height in pixels
 Snake snake(100, 4);
 Fruit Fruits[10];
 
-int direction = Snake::Direction::UP;
+int direction;
 
-using namespace std;
+void Keys(int key, int a, int b)
+{
+	switch (key)
+	{
+	case 100: direction = Snake::Direction::LEFT; break;
+	case 101: direction = Snake::Direction::UP; break;
+	case 102: direction = Snake::Direction::RIGHT; break;
+	case 103: direction = Snake::Direction::DOWN; break;
+	}
+}
 
 void DrawField()
 {
 	glColor3f(1.0, 1.0, 1.0);
 
 	glBegin(GL_LINES);
-	
+
 	for (int i = 0; i < WIDTH; i += SCALE) { glVertex2f(i, 0); glVertex2f(i, HEIGHT); }
 	for (int i = 0; i < HEIGHT; i += SCALE) { glVertex2f(0, i); glVertex2f(WIDTH, i); }
 
@@ -39,7 +48,7 @@ void OnTick()
 	cout << "X: " << snake.cell[0].x << " " << "Y: " << snake.cell[0].y << endl; // show snake coords in cmd
 #endif 
 
-	
+
 	for (int i = snake.SnakeLength; i > 0; --i)
 	{
 		snake.cell[i].x = snake.cell[i - 1].x;
@@ -67,23 +76,11 @@ void OnTick()
 	}
 }
 
-
-void Keys(int key, int a, int b)
-{
-	switch (key)
-	{
-	case 100: direction = Snake::Direction::LEFT; break;
-	case 101: direction = Snake::Direction::UP; break;
-	case 102: direction = Snake::Direction::RIGHT; break;
-	case 103: direction = Snake::Direction::DOWN; break;
-	}
-}
-
 void display()
 {
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	for (int i = 0; i < 10; i++) 
+	for (int i = 0; i < 10; i++)
 		Fruits[i].DrawFruit(SCALE);
 
 #if DEBUG 1

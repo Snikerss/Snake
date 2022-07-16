@@ -1,3 +1,4 @@
+#pragma once
 #include "Fruit.h"
 
 	void Fruit::FruitNewCoords(int X, int Y)

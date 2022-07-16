@@ -34,8 +34,8 @@ public:
 
 		Cell()
 		{
-			this->x = 0;
-			this->y = 0;
+			this->x = -1;
+			this->y = -1;
 		}
 		Cell(int x, int y)
 		{
