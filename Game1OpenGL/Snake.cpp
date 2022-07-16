@@ -36,6 +36,15 @@ void Snake::SnakeMove(int direction, int CELLSX, int CELLSY)
 	}
 }
 
+void Snake::TransferIfNeeded(int CELLSX, int CELLSY)
+{
+	if (this->cell[0].y == CELLSY - 4) this->cell[0].y = 0;
+	if (this->cell[0].y == -1) this->cell[0].y = CELLSY - 5;
+
+	if (this->cell[0].x == CELLSX - 4) this->cell[0].x = 0;
+	if (this->cell[0].x == -1) this->cell[0].x = CELLSX - 5;
+}
+
 void Snake::DrawSnake(int SCALE)
 {
 	glColor3f(0.0, 1.0, 0.0);

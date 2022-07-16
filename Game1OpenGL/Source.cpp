@@ -1,6 +1,5 @@
 //snake
-#define DEBUG 1
-
+#define DEBUG 0
 #include "Snake.h"
 #include "Fruit.h"
 
@@ -23,7 +22,8 @@ using namespace std;
 
 void DrawField()
 {
-	glColor3f(0.0, 1.0, 0.0);
+	glColor3f(1.0, 1.0, 1.0);
+
 	glBegin(GL_LINES);
 	
 	for (int i = 0; i < WIDTH; i += SCALE) { glVertex2f(i, 0); glVertex2f(i, HEIGHT); }
@@ -35,7 +35,7 @@ void DrawField()
 
 void OnTick()
 {
-#ifdef DEBUG 1
+#if DEBUG 1
 	cout << "X: " << snake.cell[0].x << " " << "Y: " << snake.cell[0].y << endl; // show snake coords in cmd
 #endif 
 
@@ -47,14 +47,7 @@ void OnTick()
 	}
 
 	snake.SnakeMove(direction, X, Y);
-
-	if (snake.cell[0].y == Y - 4) snake.cell[0].y = 0;
-
-	if (snake.cell[0].x == -1) snake.cell[0].x = Y - 5;
-
-	if (snake.cell[0].x == X - 4) snake.cell[0].x = 0;
-
-	if (snake.cell[0].y == -1) snake.cell[0].y = Y-5;
+	snake.TransferIfNeeded(X, Y);
 
 	for (int i = 0; i < 10; i++)
 	{
@@ -93,7 +86,9 @@ void display()
 	for (int i = 0; i < 10; i++) 
 		Fruits[i].DrawFruit(SCALE);
 
+#if DEBUG 1
 	DrawField();
+#endif
 	snake.DrawSnake(SCALE);
 
 	glFlush();

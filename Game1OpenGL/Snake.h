@@ -24,8 +24,8 @@ public:
 	void SetY(int y);
 
 	void SnakeMove(int direction, int CELLSX, int CELLSY);
+	void TransferIfNeeded(int CELLSX, int CELLSY);
 	void DrawSnake(int SCALE);
-
 
 	class Cell
 	{
