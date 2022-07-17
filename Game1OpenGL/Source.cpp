@@ -66,7 +66,7 @@ void OnTick()
 
 	for (int i = 0; i < FruitAmount; i++)
 	{
-		if ((snake.cell[0].GetX() == Fruits[i].GetX()) && (snake.cell[0].GetY() == Fruits[i].GetY()))
+		if ((snake.cell[0].GetX() == Fruits[i].GetX()) && (snake.cell[0].GetY() == Fruits[i].GetY()) && (snake.SnakeLength < SnakeMaxLength))
 		{
 			snake.SnakeLength++;
 			Fruits[i].FruitNewCoords(X, Y);
