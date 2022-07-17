@@ -14,14 +14,8 @@ public:
 	};
 
 	Snake();
-	Snake(int amount, int SnakeLength);
+	Snake(int SnakeMaxLength, int SnakeLength);
 	~Snake();
-
-	int GetX();
-	int GetY();
-
-	void SetX(int x);
-	void SetY(int y);
 
 	void SnakeMove(int direction, int CELLSX, int CELLSY);
 	void TransferIfNeeded(int CELLSX, int CELLSY);
@@ -30,7 +24,6 @@ public:
 	class Cell
 	{
 	public:
-		int x, y;
 
 		Cell()
 		{
@@ -42,6 +35,20 @@ public:
 			this->x = x;
 			this->y = y;
 		}
+
+		int GetX(){return this->x;}
+		int GetY(){return this->y;}
+
+		void SetX(int x) { this->x = x; }
+		void SetY(int y) { this->y = y; }
+
+		void IncreaseX() { this->x++; }
+		void IncreaseY() { this->y++; }
+		void DecreaseX() { this->x--; }
+		void DecreaseY() { this->y--; }
+
+	private:
+		int x, y;
 	};
 
 	Cell* cell;

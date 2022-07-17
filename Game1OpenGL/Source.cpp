@@ -13,8 +13,14 @@ const int SCALE = 25; // Cells scale in pixels
 const int WIDTH = SCALE * X; // Width in pixels
 const int HEIGHT = SCALE * Y; // Height in pixels
 
-Snake snake(100, 4);
-Fruit Fruits[10];
+const int FruitAmount = 10;
+
+const int SnakeMinLength = 2;
+const int SnakeStartLength = 4;
+const int SnakeMaxLength = 100;
+
+Snake snake(SnakeMaxLength, SnakeStartLength);
+Fruit Fruits[FruitAmount];
 
 int direction;
 
@@ -45,31 +51,31 @@ void DrawField()
 void OnTick()
 {
 #if DEBUG 1
-	cout << "X: " << snake.cell[0].x << " " << "Y: " << snake.cell[0].y << endl; // show snake coords in cmd
+	cout << "X: " << snake.cell[0].GetX() << " " << "Y: " << snake.cell[0].GetY() << endl; // show snake coords in cmd
 #endif 
 
 
 	for (int i = snake.SnakeLength; i > 0; --i)
 	{
-		snake.cell[i].x = snake.cell[i - 1].x;
-		snake.cell[i].y = snake.cell[i - 1].y;
+		snake.cell[i].SetX(snake.cell[i - 1].GetX());
+		snake.cell[i].SetY(snake.cell[i - 1].GetY());
 	}
 
 	snake.SnakeMove(direction, X, Y);
 	snake.TransferIfNeeded(X, Y);
 
-	for (int i = 0; i < 10; i++)
+	for (int i = 0; i < FruitAmount; i++)
 	{
-		if ((snake.cell[0].x == Fruits[i].GetX()) && (snake.cell[0].y == Fruits[i].GetY()))
+		if ((snake.cell[0].GetX() == Fruits[i].GetX()) && (snake.cell[0].GetY() == Fruits[i].GetY()))
 		{
 			snake.SnakeLength++;
 			Fruits[i].FruitNewCoords(X, Y);
 		}
 	}
 
-	for (int i = 2; i < snake.SnakeLength; i++) // Code that makes snake cut itself if collides
+	for (int i = SnakeMinLength; i < snake.SnakeLength; i++) // makes snake cut itself if collides
 	{
-		if (snake.cell[0].x == snake.cell[i].x && snake.cell[0].y == snake.cell[i].y)
+		if (snake.cell[0].GetX() == snake.cell[i].GetX() && snake.cell[0].GetY() == snake.cell[i].GetY())
 		{
 			snake.SnakeLength = i;
 		}
@@ -83,10 +89,11 @@ void display()
 	for (int i = 0; i < 10; i++)
 		Fruits[i].DrawFruit(SCALE);
 
+	snake.DrawSnake(SCALE);
+
 #if DEBUG 1
 	DrawField();
 #endif
-	snake.DrawSnake(SCALE);
 
 	glFlush();
 }
@@ -107,8 +114,8 @@ int main(int argc, char** argv)
 		Fruits[i].FruitNewCoords(X - 5,Y - 5);
 	}
 
-	snake.cell[0].x = X / 2;
-	snake.cell[0].y = Y / 2;
+	snake.cell[0].SetX( X / 2 );
+	snake.cell[0].SetY( Y / 2 );
 
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
